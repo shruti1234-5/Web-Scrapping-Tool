@@ -30,6 +30,10 @@ const RATE_LIMIT_DELAY = SCRAPER_CONFIG.delayMs || 2000; // ms between requests
 const MAX_PAGES = SCRAPER_CONFIG.maxPages || 3; // Pagination limit
 const USE_PUPPETEER = true; // Toggle for dynamic scraping
 
+function logScrapeEvent(event, data) {
+  console.log(`[${event}]`, data);
+}
+
 function extractEmails(text) {
   const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
   return (text.match(emailRegex) || []).filter(Boolean);
