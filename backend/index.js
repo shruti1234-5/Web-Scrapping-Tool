@@ -8,12 +8,20 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/companies';
 
-app.use(cors());
+const allowedOrigins = [
+  'https://web-scrapping-tool.vercel.app', // deployed frontend
+  'http://localhost:5173' // local dev
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true // if you ever use cookies/auth
+}));
 app.use(express.json());
 
 app.use('/scrape', scrapeRouter);
 
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('MongoDB connected');
     app.listen(PORT, () => {
