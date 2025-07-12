@@ -12,8 +12,16 @@ import {
   Zap
 } from "lucide-react";
 
-// Use environment variable for API URL, fallback to localhost for dev
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/scrape"; 
+ // Use environment variable for API URL, but override with localhost in development
+const API_URL = import.meta.env.DEV 
+  ? "http://localhost:5000/scrape" 
+  : (import.meta.env.VITE_API_URL || "https://web-scrapping-tool.onrender.com/scrape");
+
+// Debug: Log the API URL being used
+console.log('Environment:', import.meta.env.MODE);
+console.log('Is Development:', import.meta.env.DEV);
+console.log('API URL:', API_URL);
+console.log('VITE_API_URL:', import.meta.env.VITE_API_URL); 
 
 function validateUrl(url) {
   try {
